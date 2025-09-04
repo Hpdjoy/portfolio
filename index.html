@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harsha | Portfolio & Applications Showcase</title>
+  <title>Hpdjoy| Portfolio & Applications Showcase</title>
   <meta name="description" content="Explore hpdjoy's professional applications and portfolio projects including chat applications, resume, agricultural solutions, furniture e-commerce, and job portal.">
   <meta name="keywords" content="Hpdjoy, web developer, portfolio, applications, chat application, resume, agriculture, furniture e-commerce, job portal">
   <meta name="author" content="hpdjoy">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourdomain.com/">
+  <meta property="og:url" content="https://hpdjoy.tech/">
   <meta property="og:title" content="hpdjoy | Portfolio & Applications">
   <meta property="og:description" content="Explore hpdjoy's professional applications and portfolio projects">
   <meta property="og:image" content="https://yourdomain.com/preview-image.jpg">
@@ -98,12 +98,14 @@
       height: 100px;
       border-radius: 50%;
       margin: 0 auto 1rem;
-      background: linear-gradient(45deg, var(--accent-green), var(--primary-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
+      overflow: hidden;
       border: 3px solid var(--text-light);
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     
     h1 {
@@ -286,7 +288,6 @@
       .profile-image {
         width: 80px;
         height: 80px;
-        font-size: 2rem;
       }
       
       h1 {
@@ -311,9 +312,9 @@
   <div class="container">
     <div class="profile-header">
       <div class="profile-image">
-        <span>H</span>
+        <img src="https://yourdomain.com/your-profile-pic.jpg" alt="Harsha’s profile picture">
       </div>
-      <h1>Harsha</h1>
+      <h1>hpdjoy</h1>
       <div class="subtitle">Full Stack Developer & Digital Creator</div>
       <p class="description">Crafting innovative digital solutions with cutting-edge technologies and user-centered design principles.</p>
     </div>
@@ -396,12 +397,23 @@
     <div class="divider"></div>
     
     <div class="footer">
-      <p>© 2023 Harsha. All rights reserved.</p>
+      <p>© 2025 hpdjoy. All rights reserved.</p>
       <div class="social-links">
-        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/hpdjoy" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.github.com/hpdjoy" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.instagram.com/hpdjoy" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/hpdjoy" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="mailto:your-hello@hpdjoy.tech" class="social-link">
+          <i class="fas fa-envelope"></i>
+        </a>
       </div>
     </div>
   </div>
@@ -412,7 +424,6 @@
       const appLinks = document.querySelectorAll('.app-link');
       
       appLinks.forEach((link, index) => {
-        // Add staggered animation
         link.style.opacity = "0";
         link.style.transform = "translateX(-20px)";
         
