@@ -47,6 +47,23 @@
 </head>
 
 <body>
+  <!-- Liquid background (interactive, gooey blobs) -->
+  <div class="liquid-bg" aria-hidden="true">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <svg class="svg-filters" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+  </div>
   <!-- Navigation -->
   <header id="header">
     <nav>
@@ -385,6 +402,66 @@
       // Start the loop after a short delay
       setTimeout(typeLoop, 500);
     }
+
+      // Liquid background interaction: move blobs toward cursor + idle float
+      (function(){
+        const container = document.querySelector('.liquid-bg');
+        const blobs = Array.from(document.querySelectorAll('.liquid-bg .blob'));
+        if(!container || blobs.length === 0) return;
+
+        // initial positions
+        const state = blobs.map((b, i) => ({
+          el: b,
+          x: window.innerWidth * (0.2 + 0.15 * i),
+          y: window.innerHeight * (0.3 + 0.1 * i),
+          tx: 0,
+          ty: 0,
+          vx: 0,
+          vy: 0,
+          r: 120 + i * 40
+        }));
+
+        let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+        let lastMove = Date.now();
+
+        function onMove(e){
+          lastMove = Date.now();
+          mouse.x = e.touches ? e.touches[0].clientX : e.clientX;
+          mouse.y = e.touches ? e.touches[0].clientY : e.clientY;
+        }
+
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', onMove, {passive:true});
+
+        function lerp(a,b,t){ return a + (b-a) * t; }
+
+        function update(){
+          const t = 0.12;
+          state.forEach((s, i) => {
+            // target is near the mouse plus a per-blob offset for variety
+            const offsetX = Math.sin((Date.now()/1000) + i) * 80;
+            const offsetY = Math.cos((Date.now()/1200) + i) * 60;
+            s.tx = mouse.x + offsetX - (s.r/2);
+            s.ty = mouse.y + offsetY - (s.r/2);
+
+            // idle drift when mouse hasn't moved much
+            if (Date.now() - lastMove > 3000) {
+              s.tx = (window.innerWidth * (0.2 + 0.15 * i)) + Math.sin(Date.now()/1500 + i) * 80;
+              s.ty = (window.innerHeight * (0.25 + 0.1 * i)) + Math.cos(Date.now()/1300 + i) * 60;
+            }
+
+            s.x = lerp(s.x, s.tx, t);
+            s.y = lerp(s.y, s.ty, t);
+
+            s.el.style.width = s.r + 'px';
+            s.el.style.height = s.r + 'px';
+            s.el.style.transform = `translate3d(${s.x}px, ${s.y}px, 0) scale(1)`;
+          });
+          requestAnimationFrame(update);
+        }
+
+        update();
+      })();
   </script>
 </body>
 
